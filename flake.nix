@@ -35,6 +35,16 @@
           pkg-config
           gcc
         ];
+
+        eguiDeps = with pkgs; [
+          libxkbcommon
+          libGL
+          wayland
+          libx11
+          libxcursor
+          libxrandr
+          libxi
+        ];
       in {
         packages = {
           rastern = pkgs.rustPlatform.buildRustPackage {
@@ -58,13 +68,15 @@
               rustTools.stable
               rustTools.analyzer
             ]
-            ++ devTools;
+            ++ devTools
+            ++ eguiDeps;
 
           shellHook = ''
             echo "Using Rust toolchain: $(rustc --version)"
             export CARGO_HOME="$HOME/.cargo"
             export RUSTUP_HOME="$HOME/.rustup"
             mkdir -p "$CARGO_HOME" "$RUSTUP_HOME"
+            export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath eguiDeps}:$LD_LIBRARY_PATH"
           '';
         };
       }

@@ -4,3 +4,11 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
 description = "STM/AFM image analysis tool"
+
+[dependencies]
+eframe = "0.31"
+egui = "0.31"
+egui_plot = "0.31"
+image = "0.25"
+rfd = "0.15"
+rustfft = "6.4.1"
